@@ -17,10 +17,6 @@
             margin-bottom: 10px;
             background-color: #f9f9f9;
         }
-        .sum {
-            font-weight: bold;
-            color: #2c3e50;
-        }
         button {
             padding: 10px 15px;
             background-color: #3498db;
@@ -45,7 +41,6 @@
 <button onclick="checkMarks()">CHECK</button>
 
 <div id="results"></div>
-<p class="sum" id="totalMarks"></p>
 
 <script>
     function checkMarks() {
@@ -59,8 +54,7 @@
         .then(response => response.json())
         .then(data => {
             const resultsDiv = document.getElementById("results");
-            resultsDiv.innerHTML = ""; 
-            let totalMarks = 0;
+            resultsDiv.innerHTML = "";
 
             function displayCategory(category) {
                 category.forEach(project => {
@@ -68,20 +62,16 @@
                         project.items.forEach(subProject => {
                             const marks = subProject.marks || 0;
                             resultsDiv.innerHTML += `<div class="result">${subProject.project} - marks: ${marks}</div>`;
-                            totalMarks += marks;
                         });
                     } else {
                         const marks = project.marks || 0;
                         resultsDiv.innerHTML += `<div class="result">${project.project} - marks: ${marks}</div>`;
-                        totalMarks += marks;
                     }
                 });
             }
 
             displayCategory(data[0].dex);
             displayCategory(data[0].lending);
-
-            document.getElementById("totalMarks").textContent = `Total Marks: ${totalMarks}`;
         })
         .catch(error => console.error('Error:', error));
     }
